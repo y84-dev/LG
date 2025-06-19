@@ -1,0 +1,21 @@
+{
+  "name": "LG-Shop",
+  "version": "1.2.2",
+  "description": "LG-Shop - Ecommerce platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HASNAOUI YACINE",
+  "license": "ISC",
+  "dependencies": {
+    "@evershop/evershop": "^1.2.2"
+  },
+  "scripts": {
+    "start": "evershop start",
+    "start:debug": "evershop start --debug",
+    "build": "evershop build",
+    "user:create": "evershop user:create",
+    "user:changePassword": "evershop user:changePassword"
+  }
+}
