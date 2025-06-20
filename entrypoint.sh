@@ -3,6 +3,7 @@
 # Wait for DB (optional)
 echo "Waiting for DB..."
 sleep 5
+export NODE_ENV=production
 
 # Create admin user (only once or if needed)
 if [ "$ADMIN_EMAIL" ]; then
@@ -10,4 +11,5 @@ if [ "$ADMIN_EMAIL" ]; then
 fi
 
 # Start the app
+
 npm run start
