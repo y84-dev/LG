@@ -1,10 +1,9 @@
 FROM node:18-alpine
-#RUN apt update && apt install -y \
-#    build-essential \
-#    libvips-dev \
-#    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
+
 RUN npm install -g npm@9
+
 COPY package*.json ./
 COPY packages ./packages
 COPY themes ./themes
@@ -13,10 +12,20 @@ COPY public ./public
 COPY media ./media
 COPY config ./config
 COPY translations ./translations
-RUN npm install --verbose
+
+# Install ALL deps (including dev)
+RUN npm install --include=dev --verbose
+
+# Build step
 RUN npm run build --verbose
-EXPOSE 80
-##CMD ["npm", "run", "start"]
-##CMD ["tail", "-f", "/dev/null"]
+
+# Now production mode
+ENV NODE_ENV=production
+
+# Entrypoint
 COPY entrypoint.sh .
+RUN chmod +x entrypoint.sh
+
+EXPOSE 8080
+
 ENTRYPOINT ["./entrypoint.sh"]
