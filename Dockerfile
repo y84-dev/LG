@@ -1,4 +1,4 @@
-FROM node:18-alpine
+FROM node:18
 
 WORKDIR /app
 
@@ -13,21 +13,21 @@ COPY media ./media
 COPY config ./config
 COPY translations ./translations
 
-# Install ALL deps (including dev)
+# Install deps (including dev)
+RUN npm install --include=dev
 
-RUN npm install --include=dev --verbose
+# Prevent OOM
 ENV NODE_OPTIONS=--max-old-space-size=4096
+ENV GENERATE_SOURCEMAP=false
 
-# Build step
-RUN npm run build --verbose
+# Build EverShop
+RUN npm run build
 
-# Now production mode
+# Runtime mode
 ENV NODE_ENV=production
 
-# Entrypoint
 COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
 EXPOSE 8080
-
 ENTRYPOINT ["./entrypoint.sh"]
