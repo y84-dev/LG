@@ -14,7 +14,9 @@ COPY config ./config
 COPY translations ./translations
 
 # Install ALL deps (including dev)
+
 RUN npm install --include=dev --verbose
+ENV NODE_OPTIONS=--max-old-space-size=4096
 
 # Build step
 RUN npm run build --verbose
